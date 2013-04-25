@@ -1,0 +1,179 @@
+<h2><font color="darkgreen">DiffPDF</font></h2>
+
+<ul>
+<li><a href="#bas">Základní použití</a></li>
+<li><a href="#cmp">Tlačítko Porovnat</a></li>
+<li><a href="#txt">Režim porovnávání slov</a></li>
+<li><a href="#chr">Režim porovnávání znaků</a></li>
+<li><a href="#vis">Režim porovnávání vzhledu</a></li>
+<li><a href="#zon">Rozdělení na oblasti</a></li>
+<li><a href="#ran">Rozsahy stran</a></li>
+<li><a href="#mar">Okraje</a></li>
+<li><a href="#sav">Ukládání</a></li>
+<li><a href="#opt">Dialog voleb</a></li>
+<li><a href="#dock">Ukotvení oken</a></li>
+<li><a href="#cli">Použití v příkazovém řádku</a></li>
+</ul>
+
+<h3 id="bas">Základní použití</h3>
+<p>Klepněte na tlačítko <b>Soubor #1</b> pro výběr jednoho souboru PDF,
+a potom na tlačítko <b>Soubor #2</b> pro výběr jiného souboru (ideálně
+velmi podobného) PDF. Pak klepněte na tlačítko <b>Porovnat</b> pro
+provedení srovnání, a když je toto dokončeno, pohybujte se dvojicemi
+porovnaných stran používajíce k tomu sdružené okno <b>Pohled</b>, nebo
+pomocí tlačítek <b>Předchozí</b> a <b>Další</b>. Jiným způsobem je přetažení 
+dvou souborů &mdash; buď odděleně nebo společně &mdash; a jejich upuštění na
+zobrazovací panely<font color="darkgreen">DiffPDF</font>, potom klepněte
+na tlačítko <b>Porovnat</b>.
+
+<h3 id="cmp">Tlačítko Porovnat</h3>
+<p>Když je stisknuto tlačítko <b>Porovnat</b>, <font
+color="darkgreen">DiffPDF</font> udělá rychlé prohledání každé dvojice
+stran (~100 dvojic stran za sekundu na autorově stroji). Aby prohlídka
+byla co nejrychlejší <font color="darkgreen">DiffPDF</font> udělá velmi
+hrubé přezkoušení každé dvojice stran &mdash;, takže je možné, že takto označí
+některé nálezy nesprávně jako kladné (např. dvojice stran, které jsou ve skutečnosti
+stejné). Falešné kladné nálezy jsou ale docela zřídkavé. (Nejsou tu nikdy žádné
+ falešné záporné nálezy &mdash; rozdíly nejsou nikdy opomenuty.)
+
+<h3 id="txt">Režim porovnávání slov</h3>
+<p>Výchozím režimem je režim porovnávání slov, který dělá chytré srovnání 
+slovo od slova u každé dvojice stran. Tento režim je celkem velkorysý, 
+pokud jde o prázdná místa a pokouší se nevšímat si změn v rozložení (v rámci strany), 
+jak jen to je možné. Stará se také o všechna dělítka (měkké dělení, znaménko minus atd.), 
+totéž jako u prostého dělení. 
+Tento režim je nejlepší pro jazyky s abecedou, jakými je například čeština nebo angličtina.
+
+<h3 id="chr">Režim porovnávání znaků</h3>
+<p>Režim porovnávání znaků, který dělá chytré srovnání 
+znak po znaku u každé dvojice stran. Tento režim je velkorysý, 
+pokud jde o prázdná místa na koncích řádků a pokouší se nevšímat si změn v
+rozložení (v rámci strany), insofar as possible. 
+jak jen to je možné. Stará se také o všechna dělítka (měkké dělení, znaménko minus atd.), 
+totéž jako u prostého dělení. 
+Tento režim je nejlepší pro logografické jazyky, jakými jsou například čínština nebo japonština.
+
+<h3 id="vis">Režim porovnávání vzhledu</h3>
+<p>Režim porovnávání vzhledu 
+lze použít na zjištění změn v písmech, diagramech, nebo u jakýchkoli jiných 
+viditelných stránek dokumentu. Tento režim je naprosto přísný a porovnává
+každou dvojici stran pixel po pixelu. Ve výchozím nastavení ukazuje tento
+režim rozdíly pomocí zvýraznění, stejně jako to činí režimy 
+porovnávání slov nebo znaků. Je nicméně možné porovnávat za použití
+skldebných režimů, což může být užitečné při zjišťování velmi malých a jemných 
+rozdílů, jež nejsou hned zřejmé.
+
+<h3 id="zon">Rozdělení na oblasti</h3>
+<p>Rozdělení na oblasti je pokusná vlastnost navržená s cílem dosahovat přesnějších
+výsledků (např. méně falešných kladných nálezů). Její hlavní užití je na strany, jež
+mají tabulky míchající abecední a logografický text, protože tyto mohou způsobit,
+že knihovna poppler PDF poskytne slova na straně pomíchaná.
+<font color="red">Varování:</font> použítí rozdělení na oblasti na velké
+složité strany (větší než A4, více sloupců, tabulky) v režimu Znaky
+může být velmi pomalé. (v současnosti je pozornost u rozdělení na oblasti
+věnována funkčnosti nikoli výkonu.) Dále může v některých případech rozdělení
+na oblasti zapříčinit <i>nárůst</i> v nesprávných kladných nálezech &mdash; to se může
+objevit, protože kód rozdělení na oblasti přeuspořádá text, který je přiveden do
+porovnání sekvence a někdy je přeuspořádání chybné. Udělat to správně není jednoduchá
+záležitost; změna odchylek může pomoci.
+
+<p>Hodnota odchylky/R je největší vzdálenost mezi textovými (např. slovo)
+obdélníky pro obdélníky k umístění ve stejné oblasti. Nižší hodnoty
+vytvoří více oblastí; vyšší vytvoří méně oblastí. Více oblastí
+je náročnější na výpočty, ale může podat přesnější výsledky; méně 
+oblastí může zmenšit počet falešných kladných nálezů. Hodnota odchylky/Y
+se používá na zaokrouhlení souřadnice <i>y</i> k nejbližšímu násobku
+této hodnoty. Například je-li Odchylka/Y 5
+a slovo v poloze (452,137) je následováno horním indexem v poloze
+(468,140), s oběma bude nakládáno tak, jakoby měly souřadnici <i>y</i> 140.
+
+<h3 id="ran">Rozsahy stran</h3>
+<p>Ve výchozím nastavení porovnává <font color="darkgreen">DiffPDF</font> každou dvojici
+stran dvou souborů PDF (nebo tolik dvojic stran, jako je číslo stran
+v kratším ze souborů PDF). Také je možné porovnat zvláštní strany nebo
+rozsahy stran. Pokud jsou například dvě verze souboru PDF,
+jedna se stranami 1-12 a druhá se stranami 1-13 kvůli zvláštní straně
+přidané jako strana 4, lze je porovnat zadáním dvou rozsahů stran,
+1-12 pro první a 1-3, 5-13 pro druhý soubor. To povede k tomu,
+že DiffPDF porovná strany ve dvojicích (1, 1), (2,
+2), (3, 3), (4, 5), (5, 6), atd. až po (12, 13).
+
+<h3 id="mar">Okraje</h3>
+<p>Je možné, aby si <font color="darkgreen">DiffPDF</font> nevšímal
+jakéhokoli textu, který je nad zadaným horním okrajem, pod zadaným dolním
+nalevo od zadaného levého okraje, a napravo od zadaného pravého okraje.
+Jeden nebo více těchto okrajů lze zadat nejprve zaškrtnutím zaškrtávacího okénka
+<b>Vyloučit okraje</b> a potom nastavením kteréhokoli z okrajů.
+Okraje lze nastavit klepnutím na pohled na stranu a použitím
+prvků představujících okraje.
+
+<h3 id="sav">Ukládání</h3>
+<p>Použijte tlačítko <b>Uložit jako</b> pro vyvolání dialogu pro uložení. Tento dialog
+vám umožní uložit soubor<tt>.pdf</tt> se zvýrazněnými změnami, nebo
+jednotlivé obrázkové soubory (např. v <tt>.png</tt> nebo v různých jiných běžných
+formátech obrázků). Dialog podporuje uložení nynější, nebo všech levých
+stran, pravých stran nebo obou stran. 
+
+<h3 id="opt">Dialog voleb</h3>
+<p>Tento dialog je vyvolán klepnutím na tlačítko <b>Volby</b>. 
+Dialog podporuje změnu barvy zvýraznění, zda použít pero 
+nebo výplně nebo obojí, a neprůhlednost výplně. Velikost pole se používá 
+při provádění porovnání v režimu vzhledu: čím menší velikost, tím 
+je zvýraznění jemnější &mdash; a pomalejší na výpočty. 
+Šířka vyznačovací čáry stanovuje tloušťku okrajových čar používaných 
+na vyznačení svislé polohy rozdílů; čáry je možné vypnout 
+použitím nastavení šířky vyznačovací čáry na 0.
+
+<h3 id="dock">Ukotvení oken</h3>
+<p>Ovládací prvky, činnosti, okraje, rozdělení na oblasti a pohled na zápisy jsou
+ukotvených prvcích &mdash; tyto lze přetáhnout do jiných kotevních oblastí pro kotvení (v takovém
+případě se jejich tvar změní podle potřeby), nebo odtáhnout k volnému plavení.
+Okraje, rozdělení na oblasti a pohled na zápisy jde také zavřít; klepnutí pravým
+tlačítkem myši na oddělovač kotevní oblasti a zaškrtnutí zaškrtávacího okénka pro
+jejich opětovné otevření. Tyto pohledy lze ukázat v kartách: Pokud je dostatek místa,
+lze je z jejich karet odtáhnout a ukázat všechny v úplnosti.
+
+<h3 id="cli">Použití v příkazovém řádku</h3>
+<p>I když je <font color="darkgreen">DiffPDF</font> program s obrazovým uživatelským
+rozhraním, pokud se spustí v terminálu v příkazovém řádku s uvedením dvou souborů PDF,
+<font color="darkgreen">DiffPDF</font> naběhne a okamžitě je porovná v režimu Slova, 
+nebo v režimu Vzhled, jestliže jsou jejich názvy v příkazovém řádku uvozeny <tt>-a</tt> nebo 
+<tt>--appearance</tt>, nebo v režimu Znaky, jestliže jsou jejich názvy v příkazovém řádku uvozeny
+<tt>-c</tt> nebo <tt>--character</tt>. Spusťte <font color="darkgreen">DiffPDF</font> s <tt>--help</tt>,
+abyste viděli všechny volby pro příkazový řádek. (Toto nebude pracovat v případě systému Windows, ačkoli
+jiné volby pro příkazový řádek budou.) Zde je výstup <tt>--help</tt>:
+<pre>
+Použití: diffpdf [volby] [file1.pdf [file2.pdf]]
+
+Program s obrazovým uživatelským rozhraním, jenž porovnává dva soubory PDF a ukazuje rozdíly mezi nimi.
+
+Soubory jsou volitelné a obyčejně nastavené přes uživatelské rozhraní.
+
+Volby:
+--help             Ukázat tento text o používání a skončit (spustit
+                   program bez této volby a stistnout F1 pro
+                   nápovědu na internetu)
+--appearance  -a   Nastavit počáteční režim porovnávání na Vzhled
+--characters  -c   Nastavit počáteční režim porovnávání na Znaky
+--words       -w   Nastavit počáteční režim porovnávání na Slova
+--language=xx      Nastavit program, aby používal daný překladový
+                   jazyk, například en pro anglický, cz pro český;
+                   Angličtina se bude používat, pokud není dostupný žádný
+                   překlad
+--debug=2          Zapsat text vedený do porovnání sekvence do
+                   dočasných souborů (např. /tmp/page1.txt atd.)
+--debug=3          Stejně jako --debug=2, ale také zahrnuje souřadnice v
+                    y, x
+</pre>
+
+<p>
+Vykreslení textu je uděláno postupem
+<tt>TextItems::columnZoneYxOrder()</tt> v souboru
+<tt>textitem.cpp</tt>: návrhy na vylepšení jsou vítány!
+(Všimněte si, že při použití <tt>--debug3</tt> jsou souřadnice výstup v
+<i>y</i>, <i>x</i>.)
+
+<p>Pokud hledáte zvláštní nástroj na porovnávání PDF v příkazovém řádku 
+např. pro automatizované zkoušení, vyzkoušejte 
+<a href="http://www.qtrac/eu/comparepdf.html">comparepdf</a>.
+

@@ -1,0 +1,99 @@
+
+<ul>
+<li><a href="#bas">Usage de base</a></li>
+<li><a href="#cmp">Le bouton Comparer</a></li>
+<li><a href="#txt">Le mode de comparaison par Mots</a></li>
+<li><a href="#chr">Le mode de comparaison par Caractères</a></li>
+<li><a href="#vis">Le mode de comparaison selon l'Apparence</a></li>
+<li><a href="#zon">Découpage par zones</a></li>
+<li><a href="#ran">Intervalles de pages</a></li>
+<li><a href="#mar">Marges</a></li>
+<li><a href="#sav">Enregistrer</a></li>
+<li><a href="#opt">La fenêtre d'Options</a></li>
+<li><a href="#dock">Utilisation des fenêtres en Docks</a></li>
+<li><a href="#cli">Utilisation par la ligne de commande</a></li>
+</ul>
+
+<h3 id="bas">Usage de base</h3>
+<p>Cliquer sur le bouton <b>Fichier #1</b> pour sélectionner un premier fichier PDF puis sur le bouton <b>Fichier #2</b> pour en choisir un second (idéalement très similaire), et finalement cliquer sur le bouton <b>Comparer</b> pour lancer le travail de comparaison. Une fois la comparaison effectuée par le logiciel, naviguer d'une paire de pages présentant des différences à l'autre en utilisant le menu déroulant <b>Vue</b> ou bien les boutons <b>Précédent</b> et
+<b>Suivant</b>. De manière alternative, glisser 2 fichiers&mdash;soit l'un après l'autre, soit ensemble&mdash;et les déposer dans la fenêtre de <font
+color="darkgreen">DiffPDF</font>, puis cliquer sur le bouton <b>Comparer</b>.
+
+<h3 id="cmp">Le bouton Comparer</h3>
+<p>Quand le bouton <b>Comparer</b> est pressé, <font
+color="darkgreen">DiffPDF</font> effectue un parcours ultra-rapide de chaque paire de page afin de détecter les différences (~100 paires de pages chaque seconde sur la machine de l'auteur). Pour détecter les différences très rapidement, <font color="darkgreen">DiffPDF</font> effectue une comparaison assez grossière de chaque paire de page&mdash;il est donc possible que des faux positifs apparaissent (par exemple des pages appariées détectées différentes alors qu'elles sont strictement identiques). Les faux positifs sont toutefois assez rares. (Il n'y a pas de faux négatifs&mdash;les différences ne sont jamais manquées.)
+
+<h3 id="txt">Le mode de comparaison par Mots</h3>
+<p>Le mode de comparaison par défaut est celui par Mots : il s'agit d'une comparaison mot par mot sur chacune des paires de pages. Ce mode est assez laxiste concernant les espaces et essaye d'ignorer les changements de mise en page (au sein d'une même page) autant que possible. Ce mode considère également tous les tirets comme identiques. Ce mode est le plus adapté aux langues alphabétiques comme l'anglais ou le français.
+
+<h3 id="chr">Le mode de comparaison par Caractères</h3>
+<p>Le mode de comparaison par caracètres effectue une comparaison intelligente de chacun des caractères sur les paires de pages. Ce mode est laxiste concernant les espaces de fin de ligne et essaye d'ignorer les changements de mise en page autant que possible. Ce mode considère également tous les tirets comme identiques. Ce mode est le plus adapté aux langues à idéogrammes comme le chinois ou le japonais.
+
+<h3 id="chr">Le mode de comparaison selon l'Apparence</h3>
+<p>Le mode de comparaison selon l'Apparence peut être utilisé pour détecter
+des différences entre les polices, les illustrations ou tout autre élément visuel.
+La comparaison obéit à une logique stricte : les pixels de chaque page sont comparés
+deux à deux sur l'ensemble du document. Par défaut, ce mode utilise le surlignage
+pour mettre en évidence les différences. Cependant, il est possible d'utiliser les modes "compositions"
+pour détecter des différences subtiles qui ne sont pas facilement apparentes.
+
+<h3 id="zon">Découpage par zones</h3>
+<p>Le découpage par zones est une fonction encore expérimentale destinée à produire des résultats plus fiables (i.e. moins de faux positifs). Elle peut être utilisée principalement pour les pages qui contiennent des tableaux ou bien qui mélangent des textes alphabétiques et des idéogrammes. En effet, ces mélanges peuvent conduire la librairie sous-jacente Popplar à mélanger les textes. <font color="red">Attention :</font> l'utilisation du découpage par zones pour des grandes pages complexes (plus grandes qu'A4, à multiples colonnes, avec de grandes tables) en mode Caractères peut provoquer de grosses lenteurs (pour le moment, le développement de cette fonction est axé sur sa rigueur et non son efficacité). En outre, dans certains cas le découpage par zones peut conduire à une <i>augmentation</i> du nombre de faux positifs&mdash;cela peut être le cas quand le code de découpage réordonne de manière erronée le texte avant de le traiter. Améliorer ceci n'est pas trivial; changer les limites de tolérance peut aider.
+
+<p>La valeur de la Tolérance/R est la valeur de la distance maximale entre les rectangles de texte (i.e. les mots) pour les considérer comme inclus dans la même zone. Des valeurs plus faibles conduisent à la création de zones plus nombreuses, des valeurs plus grandes à moins de zones. Un plus grand nombre de zones demande plus de temps de calcul mais produit des résultats plus exacts. Un nombre plus faible de zones peut contribuer à réduire les faux positifs. La valeur Tolérance/Y est utilisée pour arrondir la coordonnée en <i>y</i> (l'ordonnée) au multiple le plus proche de cette valeur. Par exemple, si la tolérance/Y est 5 et si un mot de coordonnées (452,137) est suivi d'un exposant de coordonnées (468,140), les 2 seront traités comme ayant une coordonnée <i>y</i> de 140.
+
+<h3 id="ran">Intervalles de pages</h3>
+<p>Par défaut <font color="darkgreen">DiffPDF</font> compare chaque paire de pages des 2 fichiers PDF (ou bien le nombre maximale de paires possibles en se basant sur le fichier le plus court). Il est toutefois également possible de comparer des pages particulières ou bien des intervalles de pages. Par exemple, si 2 versions d'un fichier PDF existent, l'une avec 12 pages et l'autre avec 13 pages à cause de l'addition d'une nouvelle page à la position 4, il est nécessaire d'expliquer à <font color="darkgreen">DiffPDF</font> quelles pages comparer : dans l'exemple décrit, on demandera de comparer les pages 1-12 du premier document avec les pages 1-3, 5-13 du second. Avec ce paramétrage, DiffPDF comparera les pages des paires (1,1), (2,2), (3,3), (4,5), (5,6) et ainsi de suite jusqu'à (12,13).
+
+<h3 id="mar">Marges</h3>
+<p>Il est possible de demander à <font color="darkgreen">DiffPDF</font> ignorer tout texte se trouvant au-dessus d'une marge haute, en-dessous d'une marge basse, à gauche d'une marge gauche ou bien encore à droite d'une marge droite. Une ou plusieurs de ces marges peut être activée en cochant la case <b>Exclure des marges</b> puis en spécifiant les valeurs des marges en question. Les valeurs des marges peuvent être ajustées en cliquant dans la vue ou bien en saisissant une valeur manuellement.
+
+<h3 id="sav">Enregistrer</h3>
+<p>Utiliser le bouton <b>Enregistrer Sous</b> pour ouvrir une fenêtre d'enregistrement. Cette fenêtre permet d'enregistrer un fichier <tt>.pdf</tt> avec les changements mis en évidence, ou bien des fichiers images individuels (par exemple, en <tt>.png</tt> ou plusieurs autres formats d'image courants). La fenêtre permet de sauvegarder au choix, toutes les pages, la page courante seulement, les pages de droite, les pages de gauche...
+
+<h3 id="opt">La fenêtre d'Options</h3>
+<p>Cette fenêtre est invoquée par un clic sur le bouton <b>Options</b>. Il est possible de modifier la couleur de surlignage, le type de pinceau utilisé pour afficher les différences (crayon, remplissage ou bien les 2 ensemble) et l'opacité de la couleur de remplissage. La taille du carré est utilisée lorsqu'on utilie le mode de comparaison selon l'apparence : plus la taille est petite, plus le surlignage est précis&mdash;il est également plus lent à calculer. La largeur de la règle détermine l'épaisseur de la règle utilisée dans la marge pour indiquer la position verticale des erreurs ; ces règles peuvent être désactivées en choisissant une largeur nulle.
+
+<h3 id="dock">Utilisation des fenêtres en Docks</h3>
+<p>Les vues Contrôles, Actions, Marges, Découpage par zones et Log sont inclues dans des éléments dockables&mdash; ces derniers peuvent donc être glissés dans d'autres zones de l'écran (dans ce cas, ils se redessineront de manière adéquate) ou bien glissés en-dehors des zones pour se transformer en fenêtres flottantes. Ces éléments peuvent également être clos; ils seront réouverts en effectuant un clic droit sur les séparateurs et en sélectionnant la case à cocher leur correspondant. Enfin, ces éléments peuvent être affichés sous forme d'onglets.
+
+<h3 id="cli">Utilisation par la ligne de commande</h3>
+<p>Bien que <font color="darkgreen">DiffPDF</font> soit un programme avec une interface graphique, il est possible de le lancer depuis la ligne de commande avec 2 fichiers passés en paramètres. <font color="darkgreen">DiffPDF</font> démarrera automatiquement en mode 'Comparaison par Mots', ou bien en 'Comparaison selon l'apparence' si les noms des fichiers ont été précédés de l'option <tt>-a</tt> ou <tt>--appearance</tt>, ou encore en 'Comparaison par caractères' si l'on ajoute l'option <tt>-c</tt> ou 
+<tt>--character</tt> sur la ligne de commande. Lancer 
+<font color="darkgreen">DiffPDF</font> avec l'option <tt>-h</tt> ou <tt>--help</tt> pour afficher toutes les options de la ligne de commande (cela ne fonctionnera pas sur Windows mais devrait fonctionner sur les autres systèmes d'exploitation). Voici la sortie provoquée par l'option <tt>--help</tt> :
+<pre>
+usage: diffpdf [options] [file1.pdf [file2.pdf]]
+
+A GUI program that compares two PDF files and shows
+their differences.
+
+The files are optional and are normally set through
+the user interface.
+
+options:
+--help             show this usage text and terminate (run the
+                   program without this option and press F1 for
+                   online help)
+--appearance  -a   set the initial comparison mode to Appearance
+--characters  -c   set the initial comparison mode to Characters
+--words       -w   set the initial comparison mode to Words
+--language=xx      set the program to use the given translation
+                   language, e.g., en for English, cz for Czech;
+                   English will be used if there is no translation
+                   available
+--debug=2          write the text fed to the sequence matcher into
+                   temporary files (e.g., /tmp/page1.txt etc.)
+--debug=3          as --debug=3 but also includes coordinates in
+                    y, x order
+</pre>
+
+<p>
+Le ré-ordonnancement du texte est effectué par la méthode <tt>TextItems::columnZoneYxOrder()</tt> dans le fichier
+<tt>textitem.cpp</tt> : toute suggestion d'amélioration est la bienvenue !
+(Il est intéressant de noter qu'avec l'option <tt>--debug3</tt> les coordonnées sont affichées dans l'ordre <i>y</i>, <i>x</i>.)
+
+<p>Si vous recherchez de manière spécifique un outil de comparaison de fichiers PDF en ligne de commande, par exemple
+pour effectuer des comparaisons automatiques, essayez 
+<a href="http://www.qtrac/eu/comparepdf.html">comparepdf</a>.
+
+

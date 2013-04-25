@@ -1,0 +1,194 @@
+﻿<h2><font color="darkgreen">DiffPDF</font></h2>
+
+<ul>
+<li><a href="#bas">Verwendung</a></li>
+<li><a href="#cmp">Der Vergleichsvorgang</a></li>
+<li><a href="#txt">Vergleichsmodus Wort-für-Wort</a></li>
+<li><a href="#chr">Vergleichsmodus Zeichen-für-Zeichen</a></li>
+<li><a href="#vis">Visueller Vergleich</a></li>
+<li><a href="#zon">Einteilung (Zonen-Bildung)</a></li>
+<li><a href="#ran">Seitenbereiche</a></li>
+<li><a href="#mar">Randbereiche</a></li>
+<li><a href="#sav">Speichern</a></li>
+<li><a href="#opt">Optionen</a></li>
+<li><a href="#dock">Andockbare Fenster</a></li>
+<li><a href="#cli">Verwendung über die Kommandozeile</a></li>
+</ul>
+
+<h3 id="bas">Verwendung</h3>
+<p>Drücken Sie zunächst die Schaltfläche <b>Datei #1</b> und wählen Sie eine PDF-Datei. 
+Drücken Sie dann die Schaltfläche <b>Datei #2</b> um eine weitere (idealerweise sehr ähnliche) PDF-Datei auszuwählen.
+Anschließend drücken Sie die Schaltfläche <b>Vergleichen</b> um den Vergleich beider Dateien zu starten.
+Sobald der Vorgang abgeschlossen ist können Sie die Seiten mit Unterschieden
+paarweise anzeigen lassen, indem Sie die <b>Ansicht</b>-Auswahlbox oder
+die Schaltflächen <b>Vorherige</b> und
+<b>Nächste</b> verwenden. Alternativ können Sie auch zwei Dateien&mdash;entweder
+einzeln oder auf einmal&mdash;mit der Maus auf die Seitenanzeigebereiche von <font
+color="darkgreen">DiffPDF</font> ziehen, und anschließend die Schaltfläche
+<b>Vergleichen</b> drücken.
+
+<h3 id="cmp">Der Vergleichsvorgang</h3>
+<p>Wenn die Schaltfläche <b>Vergleichen</b> gedrückt wird führt <font
+color="darkgreen">DiffPDF</font> einen sehr schnellen Scan jedes Seitenpaares aus
+(etwa 100 Seitenpaare die Sekunde auf dem Computer des Entwicklers). Um die 
+Geschwindigkeit des Scanvorgangs zu beschleunigen wird nur eine sehr
+grobe Prüfung der Seitenpaare durchgeführt&mdash;es ist daher möglich, dass
+es zu Fehlerkennungen kommt (d.h. ein Seitenpaar wird aufgelistet obwohl es keine Unterschiede gibt). 
+Fehlerkennungen treten nur selten auf. (Es kann jedoch nicht vorkommen
+dass Seiten, die sich unterschieden, nicht erkannt werden.)
+
+<h3 id="txt">Vergleichsmodus Wort-für-Wort</h3>
+<p>Der Standardvergleichsmodus ist Wort-für-Wort, bei dem ein intelligenter 
+Textvergleich wortweise für jedes Seitenpaar durchgeführt wird.
+In diesem Modus wird recht freiheitlich mit Leerraumzeichen (whitespace)
+umgegangen damit Änderungen am Layout nach Möglichkeit
+nicht als Unterschied erkannt werden (innerhalb einer Seite).
+Auch werden alle Binde- und Trennstriche als gleich angesehen.
+Dieser Modus eigenet sich am besten für alphabetische Sprachen
+wie etwa Deutsch und Englisch.
+
+<h3 id="chr">Vergleichsmodus Zeichen-für-Zeichen</h3>
+<p>Bei diesem Vergleichsmodus wird ein intelligenter Einzelzeichenvergleich
+für den Text jedes Seitenpaares durchgeführt. Hierbei wird recht freiheitlich
+mit Leerraumzeichen (whitespace) am Ende jeder Zeile umgegangen
+damit Änderungen am Laouyt nach Möglichkeit nicht als Unterschied erkannt werden.
+Auch werden alle Binde- und Trennstriche als gleich angesehen.
+Dieser Modus eigenet sich am besten für logographische Sprachen
+wie etwa Chinesisch und Japanisch.
+
+<h3 id="vis">Visueller Vergleich</h3>
+<p>Der visuelle Vergleichsmodus eignet sich um Unterschiede bei
+Schriftarten, Diagrammen oder anderen sichtbaren Elementen zu
+finden. Dieser Modus ist absolut genau und vergleicht jedes Seitenpaar
+Pixel für Pixel. Standardmäßig werden Unterschiede auch in diesem
+Modus durch farbliche Hervorhebug markiert. Alternativ können
+hier jedoch auch Kompositionsmodi verwendet werden, welche
+das Auffinden von minimalen Unterschieden erleichtern können.
+ 
+<h3 id="zon">Einteilung (Zonen-Bildung)</h3>
+<p>Die Einteilung ist ein experimenteller Modus um die Genauigkeit
+der Ergebnisse zu verbessern (d.h. weniger Fehlerkennungen).
+Der Hauptanwendungsbereich sind Seiten die Tabellen oder 
+alphabetische und logographische Texte enthalten, da es hier dazu
+kommen kann dass die intern verwendete Poppler PDF Bibliothek
+die Texte auf der Seite in unterschiedlicher Reihenfolge liefert.
+<font color="red">Warnung:</font> Einteilung kann bei großen,
+komplexen Seiten (größer als A4, mehrere Spalten, Tabellen)
+im Vergleichsmodus Zeichen-für-Zeichen sehr langsam sein.
+(Bei der Einteilung wird der Schwerpunkt auf die Funktionalität
+gelegt, nicht auf die Effizienz). Außerdem kann es in einigen 
+Fällen passieren dass die Einteilung zu <i>vermehrten</i>
+Fehlerkennungen führt&mdash;dies kann vorkommen da sich durch
+die Einteilung die Reihenfolge ändert, in welcher der Text an den
+Sequenzmatcher übergeben wird, und diese Umsortierung
+verkehrt sein kann. Dies zu korrigieren kann schwierig sein;
+Änderungen an den Toleranz-Einstellungen können helfen.
+
+<p>Toleranz/B ist die maximale Distanz zwischen Textbereichen
+(Wörtern) bei der Texte der gleichen Zone zugeordnet werden.
+Kleinere Werte führen zu mehr Zonen; größere Werte zu weniger
+Zonen. Mehr Zonen benötigen mehr Zeit für die Berechnung aber
+können zu genaueren Ergebnissen führen; weniger Zonen können
+Fehlerkennungen reduzieren. 
+
+<p>Toleranz/Y wird verwendet um die <i>Y</i>-Koordinate
+auf eine Vielzahl dieses Wertes zu runden. Ist beispielsweise
+Toleranz/Y auf 5 eingestellt dann wird ein Wort bei (452,137)
+und ein folgendes Superscript bei (468,140) bei der Verarbeitung
+behandelt als hätten beide die <i>Y</i>-Koordinate 140.
+
+<h3 id="ran">Seitenbereiche</h3>
+<p>Standardmäßig vergleicht <font color="darkgreen">DiffPDF</font> alle Seitenpaare
+der beiden PDFs (die Anzahl wird durch die Zahl der Seiten des kürzeren PDFs bestimmt).
+Es ist auch möglich nur bestimmte Seiten oder Seitenbereiche zu vergleichen.
+Gibt es beispielsweise zwei Versionen eines PDFs, eine mit 12 Seiten und eine
+mit 13 Seiten, da eine Extraseite als Seite 4 eingefügt wurde, dann kann der Vergleich
+durchgeführt werden durch Angabe der Seitenbereiche 1-12 für das erste und
+1-3,5-13 für das zweite PDF. Das bewirkt, dass <font color="darkgreen">DiffPDF</font>
+die Seitepaare (1, 1), (2, 2), (3, 3), (4, 5), (5, 6), und so weiter, bis (12, 13) vergleicht.
+
+<h3 id="mar">Randbereiche</h3>
+<p><font color="darkgreen">DiffPDF</font> kann Text innerhalb von 
+Randbereichen (oben, unten, links, rechts) vom Vergleich ausschließen.
+Ein oder mehrere Randbereiche können definiert werden indem zunächst
+die Checkbox <b>Randbereiche ausschließen</b> angehakt wird
+und anschließend Werte für die gewünschten Bereiche eingetragen werden.
+Randbereiche können auch durch Klick in die Seite definiert werden.
+
+<h3 id="sav">Speichern</h3>
+<p>Die Schaltfläche <b>Speichern unter</b> öffnet den Speichern-Dialog.
+Über diesen Dialog kann eine PDF-Datei mit den Hervorhebungen
+erstellt werden. Alternativ können auch Bilddateien erstellt werden
+(etwa PNG oder verschiedene andere Formate). Es kann nur
+das aktuelle Seitenpaar oder alle Seitenpaare gespeichert werden. Es
+können zudem nur die Seiten aus dem linken PDF (Datei #1),
+nur die aus dem rechten (Datei #2) oder beide Seiten nebeneinander
+gespeichert werden.
+
+<h3 id="opt">Optionen</h3>
+<p>Der Optionen Dialog wird geöffnet über die Schaltfläche <b>Optionen</b>.
+Für die Hervorhebungen kann die Farbe, dessen Füllmuster, Rahmen und
+Deckkraft eingestellt werden.
+Die Genauigkeit des visuellen Vergleichs kann eingestellt werden. 
+Kleine Werte bewirken eine genauere Hervorhebung&mdash;sind jedoch
+rechenintensiver.
+Die Breite der Randmarker, welche die vertikale Position der Unterschiede
+anzeigen, kann eingestellt werden. Eine Breite von 0 deaktivert die Randmarker.
+
+<h3 id="dock">Andockbare Fenster</h3>
+<p>Die Bereiche Steuerung, Aktionen, Randbereich, Einteilung und Log
+sind Dock-Widgets&mdash;diese können mit der Maus an die gewünschte
+Stelle oder aus dem Hauptfenster heraus gezogen werden.
+Randbereich, Einteilung und Log können auch geschlossen werden;
+durch Klick auf die Titelzeile eines beliebigen Widgets mit der rechten Maustaste öffnet
+sich ein Menü, über welches die geschlossenen Widgets wieder eingeblendet
+werden können. Mehrere Widgets können auch übereinander gezogen werden,
+so dass über kleine Reiter zwischen Ihnen hin und hergeschalten werden kann.
+
+<h3 id="cli">Verwendung über die Kommandozeile</h3>
+<p>Obwohl <font color="darkgreen">DiffPDF</font> ein Programm mit graphischer Benutzerschnittstelle ist
+kann es auch über eine Konsole gestartet werden. Werden dabei zwei PDF-Dateien übergeben, dann führt
+<font color="darkgreen">DiffPDF</font> nach dem Start sofort einen Word-für-Wort Vergleich der beiden Dateien aus.
+Wird den Dateinamen ein <tt>-a</tt> oder <tt>--appearance</tt> vorangestellt, dann wird ein visueller Vergleich durchgeführt.
+<tt>-c</tt> oder <tt>--character</tt> startet einen Zeichen-für-Zeichen Vergleich.
+Die Angabe <tt>--help</tt> listet alle verfügbaren Kommandozeilenparameter auf.
+(Dies funktioniert nicht unter Windows, die anderen Parameter allerdings schon.)
+Hier ist die Ausgabe von <tt>--help</tt>:
+<pre>
+usage: diffpdf [options] [file1.pdf [file2.pdf]]
+
+A GUI program that compares two PDF files and shows
+their differences.
+
+The files are optional and are normally set through
+the user interface.
+
+options:
+--help             show this usage text and terminate (run the
+                   program without this option and press F1 for
+                   online help)
+--appearance  -a   set the initial comparison mode to Appearance
+--characters  -c   set the initial comparison mode to Characters
+--words       -w   set the initial comparison mode to Words
+--language=xx      set the program to use the given translation
+                   language, e.g., en for English, cz for Czech;
+                   English will be used if there is no translation
+                   available
+--debug=2          write the text fed to the sequence matcher into
+                   temporary files (e.g., /tmp/page1.txt etc.)
+--debug=3          as --debug=2 but also includes coordinates in
+                    y, x order
+</pre>
+
+<p>
+Die Text-Umsortierung wird vorgenommen in Methode 
+<tt>TextItems::columnZoneYxOrder()</tt> in Datei
+<tt>textitem.cpp</tt> : Verbesserungsvorschläge nehme ich gerne entgegen!
+(Beachten Sie bitte dass bei Verwendung von <tt>--debug3</tt> 
+die Koordinaten in der Reihenfolge <i>y</i>, <i>x</i> angegeben werden.)
+
+<p>Wenn Sie auf der Suche nach einem Kommandozeilentool für den Vergleich
+von PDF-Dateien sind, etwa für automatisiertes Testen, dann probieren Sie auch 
+<a href="http://www.qtrac/eu/comparepdf.html">comparepdf</a> aus.
+
+

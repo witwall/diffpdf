@@ -1,0 +1,67 @@
+# Main Window
+File #&1...
+File #&2...
+Pages
+Pages
+&Compare
+&View
+Show
+Previous
+Next
+Zoom
+Zoning
+Columns
+Tolerance/&R
+Tolerance/&Y
+Show Zones
+Exclude Margins
+Top
+Bottom
+Left
+Right
+Compare
+Options...
+&Save As...
+About
+Quit
+
+# Options General Tab
+General
+Highlighting
+Performance
+Show &Tooltips in main window
+Rule Width
+&Cancel
+&OK
+
+# Options Highlighting Tab
+General
+Highlighting
+Performance
+Base Color
+Outline
+&Fill
+Fill Opacity
+Combine Highlighting in Text Modes
+&Cancel
+&OK
+
+# Options Highlighting Tab
+General
+Highlighting
+Performance
+Square Size
+Cache Size
+&Cancel
+&OK
+
+# Save As Dialog
+Current Page Pair
+All Page Pairs
+File #&1's Pages
+File #&2's Pages
+Both File's Pages
+Filename
+Browse...
+&Cancel
+&OK
